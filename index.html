@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="thumbnail" content="./img/logo.png" />
+<meta name="keywords" content="snapshot,14w30a,14w30b,14w30c,1.8,banner patterns,minecraft banner designer,minecraft banner crafting,minecraft banner editor,minecraft banner planner, minecraft bannershop,minecraft banner planner" />
+<meta name="description" content="[1.8 snapshot] Minecraft banner maker/designer/editor/generator/whatever. NBT code output, layer management, crafting instructions. Lightweight :3" />
+<title>Minecraft Banner Generator</title>
+<link rel="shortcut icon" href="/favicon.png" type="image/png" />
+<link rel="stylesheet" type="text/css" href="./css/index.css?ver=1.7" />
+</head>
+<body onload="init()">
+<div id="hidey"></div>
+<div class="fix" id="main">
+<div class="button borange" id="halpbutton" onclick="halp()">Help</div>
+<header><img src="./img/logo.png" class="logo" width="22"><a href="//algoin.de/bngn/"><h1>Minecraft Banner Generator</h1></a><span>Banners are 1.8 Minecraft feature. <a href="http://minecraft.gamepedia.com/Banner">More info</a><br><a href="http://www.reddit.com/r/Minecraft/comments/2bpg3l/banner_hype_ive_made_an_online_banner_generator/">Reddit thread</a> | <a href="http://www.reddit.com/r/minecraftbanners">Subreddit</a></span></header>
+<div id="screenshot">
+<div class="canvas-cont">
+	<div class="bgp"></div>
+	<div class="header"><div>Preview</div></div>
+	<div id="canvas-skew">
+		<div id="canvas-wave">
+			<div id="canvas">
+				<i ptn="base" id="base" clr="15"></i>
+			</div>
+			<div id="base-overlay"></div>
+			<div id="preview"></div>
+		</div>
+	</div>
+	<div class="canv-tool">
+		<div class="button" style="background:#CE893A;" onmousedown="chaos()">Random</div>
+		<div class="button clearall bred" onmousedown="clearAll()">Clear All</div>
+	</div>
+	<div id="saved-gal-cont" class="hidden">
+		<div class="header"><div>URL Banners</div><div class="header-button bchestex" onmousedown="exportChest(1)">Export in a chest</div></div>
+		<div id="saved-gal" onmousedown="savedGalHandler(event)"></div>
+	</div>
+</div>
+<div class="layers-cont">
+	<div class="header"><div>Layers</div><div class="header-button" id="bcompact" onmousedown="compact(event)">Compact mode</div><div class="header-button" onmousedown="epic(event)" style="margin-right:2px;background-color: #F4B869 !important" id="bepic">Drama</div></div>
+	<div id="layers">
+		<div class="layer">
+			<div class="layer-color white">
+			</div>
+			<div class="layer-pattern">
+				<div class="layer-hover">
+					<div class="layer-color-container">
+						<div class="tb-color black" title="black"></div><div class="tb-color dark_gray" title="dark_gray"></div><div class="tb-color gray" title="gray"></div><div class="tb-color white" title="white"></div><div class="tb-color pink" title="pink"></div><div class="tb-color magenta" title="magenta"></div><div class="tb-color purple" title="purple"></div><div class="tb-color blue" title="blue"></div><div class="tb-color cyan" title="cyan"></div><div class="tb-color light_blue" title="light_blue"></div><div class="tb-color green" title="green"></div><div class="tb-color lime" title="lime"></div><div class="tb-color yellow" title="yellow"></div><div class="tb-color orange" title="orange"></div><div class="tb-color brown" title="brown"></div><div class="tb-color red" title="red"></div>
+					</div>
+				</div>
+				<i class="tb-ptn" clr="15" ptn="base"></i>
+			</div><div class="layer-craft"></div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="toolbar-cont">
+	<div class="overtool">
+		<span class="url-desc">Share link:</span><input type="text" id="url" onclick="this.select()" />
+	</div>
+	<div class="header"><div>Layer Creation</div></div>
+	<div id="toolbar">
+		<div id="toolbar-colors" onmousedown="colorsHandler(event)">
+			<div class="tb-color black sel" title="black"></div><div class="tb-color dark_gray" title="dark_gray"></div><div class="tb-color gray" title="gray"></div><div class="tb-color white"></div><div class="tb-color pink" title="pink"></div><div class="tb-color magenta" title="magenta"></div><div class="tb-color purple" title="purple"></div><div class="tb-color blue" title="blue"></div><div class="tb-color cyan" title="cyan"></div><div class="tb-color light_blue" title="light_blue"></div><div class="tb-color green" title="green"></div><div class="tb-color lime" title="lime"></div><div class="tb-color yellow" title="yellow"></div><div class="tb-color orange" title="orange"></div><div class="tb-color brown" title="brown"></div><div class="tb-color red" title="red"></div>
+		</div>
+		<div id="toolbar-patterns" onmousedown="patternsHandler(event)" onmouseover="showPreview(event)" onmouseout="hidePreview(event)">
+			<div class="tbc"><i class="tb-ptn" ptn="gra" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="gru" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bri" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="hh" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="hhb" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="vh" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="vhr" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="ts" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bs" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="ls" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="rs" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="ld" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="rud" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="lud" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="rd" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="cr" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="dls" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="drs" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="sc" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="cs" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="ms" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="tl" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bl" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="tr" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="br" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="tt" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bt" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="mr" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="mc" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bts" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="tts" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="ss" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="bo" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="cbo" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="flo" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="cre" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="sku" clr="0"></i></div><div class="tbc"><i class="tb-ptn" ptn="moj" clr="0"></i></div>
+		</div>
+	</div>
+	<div class="header"><div>Generate Code</div></div>
+	<div class="generate">
+		<div class="button" onclick="jsonOutput(0)">/give</div>
+		<div class="button" onclick="jsonOutput(1)">/setblock</div>
+		<div class="button" onclick="jsonOutput(2)">/replaceitem</div>
+		<div class="button" style="background:#CE893A;" onclick="screenshot()">Screenshot</div>	
+		<span id="scrdl"><span></span></span>
+		<textarea id="code"></textarea>
+		<div class="button" style="padding: 0 40px; margin-top: 4px;" onclick="jsonInput()">Import Code</div>
+		<!--<span class="jeb">Jeb, you are wrong, commands are fine. /setblock refuses to work with BlockEntityTag :)</span>-->
+	</div>
+	<div class="header"><div>Saved Banners</div><div class="header-button bchestex" onmousedown="exportChest(0)">Export in a chest</div></div>
+	<div id="saved" onmousedown="savedHandler(event)">
+		<div class="saved-add">+</div>
+	</div>
+	<div class="undertool">
+		<span class="url-desc">Share saved banners:</span><input type="text" id="url-gal" onclick="this.select()"/>
+	</div>
+</div>
+<div id="halp" class="hidden"></div>
+<div id="halp2" class="hidden"></div>
+</div>
+<footer>
+	<span>Made by <a href="http://algoin.de/">Algoinde</a>~</span>
+	<span></span>
+	<span></span><span><span class="button borange" onclick="donatePopup()" style="margin-left:20px;">Donate?</span><div class="donate-w hidden"><span class="donate-hi no">Hi!</span><br>
+		I did this thing just for fun, but if you like it, you can support me and my server with donations :)
+		<ul class="no">
+		  <li class="no"><span class="no">Paypal:</span><a href="https://www.paypal.com/ru/cgi-bin/webscr?cmd=_flow&amp;SESSION=RqQXJO07uNQ4eA2K4gVEjs8fq_giCHB56-Y7b5eTXHUstf7O_v2gGgSDv6y" class="no"><img src="./img/paypal.png" class="no"></a></li>
+		  <li class="no"><span class="no">Flattr:</span><iframe style="border-width: 0px;" title="Flattr" src="//api.flattr.com/button/view/?uid=Algoinde&amp;button=compact&amp;url=http%3A%2F%2Falgoin.de%2Fbngn%2F" width="110" height="20" class="no"></iframe></li>
+		  <li class="no"><span class="no">Bitcoin:</span><span class="no">1NvpAfqiSTh46EPV9eN5wNjLCHPEozmBqH</span></li>
+		</ul>
+		</div></span></span>
+</footer>
+<!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter25706447 = new Ya.Metrika({id:25706447, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/25706447" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53299618-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+<script src="./js/main.js?ver=1.75"></script>
+<script src="./js/html2canvas.js"></script>
+<script src="./js/Sortable.js"></script>
+</html>
